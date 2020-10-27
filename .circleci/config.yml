@@ -1,15 +1,19 @@
 version: 2.1
 orbs:
   node: circleci/node@3.0.0
+jobs:
+  build:
+    docker:
+      - image: circleci/node:<version>
+    steps:
+      - checkout
+      - run: echo npm is installing packages...
+      - run: npm install
 workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build
   node-tests:
     jobs:
       - node/test
-  jobs:
-    build:
-      docker:
-        - image: circleci/node:<version>
-      steps:
-        - checkout
-        - content: "echo 'npm is installing packages...'"
-        - run: npm install
